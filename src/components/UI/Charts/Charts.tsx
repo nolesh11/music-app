@@ -3,7 +3,7 @@ import { useGetChartSongsQuery } from "../../../store/API/chartsApi";
 import { Heading } from "../../Tepography/Heading";
 import { StyledCharts } from "./Charts.style";
 import { Link } from "react-router-dom";
-import { ChartGenre } from "../../chartsOption/ChartOprion";
+import { ChartGenre } from "../chartsOption/ChartOprion";
 
 export const Charts = () => {
   const [selectedType, setSelectedType] = useState("songs");

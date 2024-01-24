@@ -1,4 +1,4 @@
-import { Heading } from "../Tepography/Heading";
+import { Heading } from "../../Tepography/Heading";
 
 interface Option {
   label: string;
