@@ -35,7 +35,7 @@ export const Charts = () => {
     { label: "All Time", value: "all_time" },
   ];
   const typeOptions = [
-    { label: "Songs", value: "songs" },
+    { label: "Songs", value: "songs"  },
     { label: "Albums", value: "albums" },
     { label: "Artists", value: "artists" },
     { label: "Lyrics", value: "referents" },
@@ -96,7 +96,7 @@ export const Charts = () => {
         </div>
       </div>
       {selectedType === "songs" && (
-        <div className="chartsListSongs">
+        <div className="chartsListSongs" key='uniqueKey'>
           {isLoading && <p>Loading</p>}
           {isError && <p>Error</p>}
           {chartData &&
@@ -106,7 +106,7 @@ export const Charts = () => {
                 i: number
               ) => (
                 <Link to={`/song-details/${elem.item.id}`}>
-                  <div className="chartsElems">
+                  <div className="chartsElems" key={elem.item.id}>
                     <p className="chartNum">{i + 1}</p>
                     <img
                       className="chartImg"
