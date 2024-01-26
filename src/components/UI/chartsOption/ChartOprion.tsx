@@ -1,4 +1,4 @@
-import { Heading } from "../../Tepography/Heading";
+
 
 interface Option {
   label: string;
@@ -18,7 +18,7 @@ export const ChartGenre = ({
 }: GenreSelectorProps) => {
   return (
     <div className="typeOption">
-      <Heading headingText={title} headingType="h4" />
+      <p>{title}</p>
       {options.map((option) => (
         <p onClick={() => onSelect(option.value)}>
           {option.label}

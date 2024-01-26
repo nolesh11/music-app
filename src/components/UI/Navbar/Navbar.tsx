@@ -3,7 +3,7 @@ import { StyledNavbar } from "./Navbar.style";
 export const Navbar = () => {
   return (
     <StyledNavbar>
-      <nav className=" justify-center py-2 bg-black text-white">
+      <nav className="justify-center py-2 bg-black text-white">
         <a href="http://the50th.genius.com" target="_blanc">
           <span className="border-r-2 px-10 text-white">THE 50TH</span>
         </a>
