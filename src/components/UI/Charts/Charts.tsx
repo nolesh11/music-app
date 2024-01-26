@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useGetChartSongsQuery } from "../../../store/API/chartsApi";
-// import { Heading } from "../../Tepography/Heading";
+import {
+  useGetChartAlbumsQuery,
+  useGetChartArtistQuery,
+  useGetChartLyricsQuery,
+  useGetChartSongsQuery,
+} from "../../../store/API/chartsApi";
 import { StyledCharts } from "./Charts.style";
 import { ChartGenre } from "../chartsOption/ChartOprion";
 
@@ -14,11 +18,29 @@ export const Charts = () => {
 
   const {
     data: chartSongs,
-    isLoading,
-    isError,
+    isLoading: chartSongsLoading,
+    isError: chartSongsError,
   } = useGetChartSongsQuery([timePeriod, chartGenre]);
-  const chartData = chartSongs?.chart_items;
-  console.log(chartData);
+  const {
+    data: chartAlbums,
+    isLoading: chartAlbumsLoading,
+    isError: chartAlbumsError,
+  } = useGetChartAlbumsQuery(timePeriod);
+  const {
+    data: chartArtists,
+    isLoading: chartArtistsLoading,
+    isError: chartArtistsError,
+  } = useGetChartArtistQuery(timePeriod);
+  const {
+    data: chartLyrics,
+    isLoading: chartLyricsLoading,
+    isError: chartLyricsError,
+  } = useGetChartLyricsQuery(timePeriod);
+
+  const chartDataSongs = chartSongs?.chart_items;
+  const chartDataAlbums = chartAlbums?.chart_items;
+  const chartDataArtists = chartArtists?.chart_items;
+  const chartDataLyrics = chartLyrics?.chart_items;
 
   const genreOptions = [
     { label: "All", value: "all" },
@@ -59,7 +81,10 @@ export const Charts = () => {
       <div className="chartsHeader">
         <h1 className="font-extrabold font-mono">Charts</h1>
         <div className="dropdown self-center">
-          <div className="chartsOption flex justify-between" onClick={() => setIsOpen(!isOpen)}>
+          <div
+            className="chartsOption flex justify-between"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             <div className="firstBlockText self-center">
               <p>SONGS / ALL GENRES / TODAY</p>
             </div>
@@ -93,13 +118,12 @@ export const Charts = () => {
           </div>
         </div>
       </div>
-
       {selectedType === "songs" && (
         <div className="chartList" key="uniqueKey">
-          {isLoading && <p>Loading</p>}
-          {isError && <p>Error</p>}
-          {chartData &&
-            chartData.map(
+          {chartSongsLoading && <p>Loading</p>}
+          {chartSongsError && <p>Error</p>}
+          {chartDataSongs &&
+            chartDataSongs.map(
               (
                 elem: any, // eslint-disable-line
                 i: number
@@ -128,13 +152,13 @@ export const Charts = () => {
               )
             )}
         </div>
-      )} 
-      {/* {selectedType === "albums" && (
+      )}
+      {selectedType === "albums" && (
         <div className="chartListAlbums chartList">
-          {albumError && <p>Error</p>}
-          {albumLoading && <p>Loading</p>}
-          {chartAlbumData &&
-            chartAlbumData.map(
+          {chartAlbumsLoading && <p>Loading</p>}
+          {chartAlbumsError && <p>Error</p>}
+          {chartDataAlbums &&
+            chartDataAlbums.map(
               (
                 elem: any, // eslint-disable-line
                 i: number
@@ -157,10 +181,10 @@ export const Charts = () => {
       )}
       {selectedType === "artists" && (
         <div className="chartListArtists chartList">
-          {albumError && <p>Error</p>}
-          {albumLoading && <p>Loading</p>}
-          {chartArtistData &&
-            chartArtistData.map(
+          {chartArtistsLoading && <p>Loading</p>}
+          {chartArtistsError && <p>Error</p>}
+          {chartDataArtists &&
+            chartDataArtists.map(
               (
                 elem: any, // eslint-disable-line
                 i: number
@@ -182,10 +206,10 @@ export const Charts = () => {
       )}
       {selectedType === "referents" && (
         <div className="chartListLyrics chartList">
-          {errorLytics && <p>Error</p>}
-          {albumLoading && <p>Loading</p>}
-          {chartLyricsData &&
-            chartLyricsData.map(
+          {chartLyricsLoading && <p>Loading</p>}
+          {chartLyricsError && <p>Error</p>}
+          {chartDataLyrics &&
+            chartDataLyrics.map(
               (
                 elem: any, // eslint-disable-line
                 i: number
@@ -202,110 +226,7 @@ export const Charts = () => {
               )
             )}
         </div>
-      )} */}
-
-      {/* <div className="chartsHeader">
-        <h1 className="font-extrabold font-mono">Charts</h1>
-        <div className="dropdown self-center">
-          <div
-            className="chartsOption flex justify-between"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <div className="firstBlockText self-center">
-              <p>SONGS / ALL GENRES / TODAY</p>
-            </div>
-            <div className="chartsBtn">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="16"
-                viewBox="0 0 512 512"
-              >
-                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
-              </svg>
-            </div>
-          </div>
-          <div className={`chartDropdown ${isOpen ? "active" : ""}`}>
-            <div className="typeOption">
-              <p>Type</p>
-              <p>Songs</p>
-              <p>Album</p>
-              <p>Artist</p>
-              <p>Lyrics</p>
-            </div>
-            <div className="typeOption">
-              <p>Genre</p>
-              <p>all</p>
-              <p>rap</p>
-              <p>pop</p>
-              <p>r&b</p>
-              <p>rock</p>
-              <p>country</p>
-            </div>
-            <div className="typeOption">
-              <p>Time</p>
-              <p>day</p>
-              <p>week</p>
-              <p>month</p>
-              <p>all time</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="chartList">
-        <div className="chartsElems">
-          <p className="chartNum">1</p>
-          <img className="chartImg" src="../../../../public/IMG_6270.JPG" alt="" />
-          <p className="chartTitle">NoFam</p>
-          <p className="chartArtist">Alex Nogay</p>
-          <p className="text-xs">1.7M</p>
-        </div>
-      </div>
-      <div className="chartList">
-        <div className="chartsElems">
-          <p className="chartNum">10</p>
-          <img className="chartImg" src="../../../../public/IMG_6270.JPG" alt="" />
-          <p className="chartTitle">NoFam</p>
-          <p className="chartArtist">Alex Nogay</p>
-          <p className="text-xs">1.7M</p>
-        </div>
-      </div>
-      <div className="chartList">
-        <div className="chartsElems">
-          <p className="chartNum">1</p>
-          <img className="chartImg" src="../../../../public/IMG_6270.JPG" alt="" />
-          <p className="chartTitle">NoFam</p>
-          <p className="chartArtist">Alex Nogay</p>
-          <p className="text-xs">1.7M</p>
-        </div>
-      </div>
-      <div className="chartList">
-        <div className="chartsElems">
-          <p className="chartNum">1</p>
-          <img className="chartImg" src="../../../../public/IMG_6270.JPG" alt="" />
-          <p className="chartTitle">NoFam</p>
-          <p className="chartArtist">Alex Nogay</p>
-          <p className="text-xs">1.7M</p>
-        </div>
-      </div>
-      <div className="chartList">
-        <div className="chartsElems">
-          <p className="chartNum">1</p>
-          <img className="chartImg" src="../../../../public/IMG_6270.JPG" alt="" />
-          <p className="chartTitle">NoFam</p>
-          <p className="chartArtist">Alex Nogay</p>
-          <p className="text-xs">1.7M</p>
-        </div>
-      </div>
-      <div className="chartList">
-        <div className="chartsElems">
-          <p className="chartNum">1</p>
-          <img className="chartImg" src="../../../../public/IMG_6270.JPG" alt="" />
-          <p className="chartTitle">NoFam</p>
-          <p className="chartArtist">Alex Nogay</p>
-          <p className="text-xs">1.7M</p>
-        </div>
-      </div> */}
+      )}
     </StyledCharts>
   );
 };
