@@ -53,6 +53,7 @@ export const StyledHeader = styled.header`
 
   .bergerMenuOpened.active {
     display: flex;
+    z-index: 999;
   }
 
   .bergerMenuOpened p {
