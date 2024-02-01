@@ -1,3 +1,3 @@
 export const baseUrl = 'https://genius-song-lyrics1.p.rapidapi.com'
-export const xKey = '1f3d4c747fmsh000d7c75e4e0862p11b459jsn10698b4a9813'
+export const xKey = '065925ab88msh44a325fc231135fp19ff33jsn90314f0da330'
 export const xHost = 'genius-song-lyrics1.p.rapidapi.com'

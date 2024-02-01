@@ -1,10 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MainPage } from "./Pages/MainPage/MainPage";
+import { AlbumPage } from "./Pages/AlbumPage/AlbumPage";
 
 const routerConfig = createBrowserRouter([
   {
     path: "/",
     element: <MainPage />,
+  },
+  {
+    path: "/album-details/:albumId",
+    element: <AlbumPage />,
   },
 ]);
 
