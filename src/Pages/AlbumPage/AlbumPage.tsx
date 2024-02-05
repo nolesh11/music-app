@@ -164,7 +164,7 @@ export const AlbumPage = () => {
                     )}
                   </div>
                 </div>
-                <div className="albumScholars">
+                {/* <div className="albumScholars">
                   <h5 className="my-2">top album scholars</h5>
                   <div className="bg-white p-4">
                     <div className="artistLeaderboardList flex p-2 border-b-2">
@@ -220,7 +220,7 @@ export const AlbumPage = () => {
                       <p className="attributionValue ml-auto">123.123</p>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
