@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export const StyledComponentWithBackgroundImage = styled.div`
+interface IImageUrl {
+  imageUrl: string;
+}
+
+export const StyledComponentWithBackgroundImage = styled.div<IImageUrl>`
   width: 100%;
   height: 360px;
-  background-image: url(../../public/wallp.jpeg);
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 0 top calc(-18.8vw + 1px);
@@ -85,6 +89,11 @@ export const StyledAlbumPage = styled.div`
     }
   }
 
+  @media screen and (max-width: 1000px) {
+    .albumTracks, .albumDetails, .albumTracksDiscription {
+      width: 90vw;
+    }
+  }
   @media screen and (max-width: 800px) {
     .chartViewContainer {
       display: none;

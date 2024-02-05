@@ -34,6 +34,8 @@ export const AlbumPage = () => {
   const appearanceData = appearance?.album_appearances;
   const maxLength = 435;
 
+  const imageUrl = `${albumData?.header_image_url}`;
+
   const handleText = () => {
     setIsFull(!isFull);
   };
@@ -42,11 +44,11 @@ export const AlbumPage = () => {
     <>
       <Header />
       <Navbar />
-      <StyledComponentWithBackgroundImage />
+      <StyledComponentWithBackgroundImage imageUrl={imageUrl} />
       <Container>
         <StyledAlbumPage>
           <div className={`container`}>
-            <div className="albumInfo flex gap-10 flex-wrap">
+            <div className="albumInfo flex gap-10 flex-wrap justify-center">
               {albumLoading && <p>Loading</p>}
               {albumError && <p>Error</p>}
               <img className="albumImg" src={albumData?.cover_art_url} alt="" />
@@ -92,7 +94,7 @@ export const AlbumPage = () => {
                 </svg>
               </div>
             </div>
-            <div className="albumList flex gap-20 flex-wrap mx-auto">
+            <div className="albumList flex gap-20 flex-wrap mx-auto justify-center">
               <div className="albumTracks w-5/12">
                 <Heading headingText="music tracklist" headingType="h3" />
                 {appearanceLoading && <p>Loading</p>}
