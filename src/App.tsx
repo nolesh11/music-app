@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MainPage } from "./Pages/MainPage/MainPage";
 import { AlbumPage } from "./Pages/AlbumPage/AlbumPage";
+import { LoginPage } from "./Pages/LoginPage/LoginPage";
 
 const routerConfig = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const routerConfig = createBrowserRouter([
   {
     path: "/album-details/:albumId",
     element: <AlbumPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 

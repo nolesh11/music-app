@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyledHeader } from "./Header.style";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,7 +39,9 @@ export const Header = () => {
           </svg>
         </div>
         <div className="userLogin mt-3 ">
-          <button className="mr-3">Sign in</button>
+          <Link to={'/login'}>
+            <button className="mr-3">Sign in</button>
+          </Link>
           <button>Sign up</button>
         </div>
       </header>
