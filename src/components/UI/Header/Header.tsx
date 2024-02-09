@@ -8,6 +8,9 @@ export const Header = () => {
   const handleLogOut = () => {
     navigate('/login')
   }
+  const handleToMain = () => {
+    navigate('/main')
+  }
 
   return (
     <StyledHeader>
@@ -29,7 +32,7 @@ export const Header = () => {
           </div>
           <input className="px-3 py-2 self-center" type="text" placeholder="Search" />
         </div>
-        <div className="headerLogo">
+        <div onClick={handleToMain} className="headerLogo cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100"

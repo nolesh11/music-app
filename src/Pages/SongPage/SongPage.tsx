@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Header } from "../../components/UI/Header/Header";
 import { Navbar } from "../../components/UI/Navbar/Navbar";
@@ -15,45 +15,94 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import { VscSettings } from "react-icons/vsc";
 import { LuPencil } from "react-icons/lu";
 import { Footer } from "../../components/UI/Footer/Footer";
+import {
+  useGetLyricsQuery,
+  useLazyGetSongByIdQuery,
+} from "../../store/API/songApi";
+import { useParams } from "react-router-dom";
+import { SongLyrics } from "../../components/Tepography/songLyrics";
+import { PiArrowElbowRightDown } from "react-icons/pi";
 
 export const SongPage = () => {
+  const { songId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [fetchTrigger, { data: song }] = useLazyGetSongByIdQuery();
+  const {
+    data: lyrics,
+    isLoading: lyricsLoading,
+    isError: lyricsError,
+  } = useGetLyricsQuery(songId);
+
+  const songData = song?.song;
+  const lyricsData = lyrics?.lyrics;
+
+  useEffect(() => {
+    if (songId) {
+      fetchTrigger(songId);
+    }
+  }, [songId]);
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  const imageBack = `${songData?.custom_header_image_url}`;
   return (
     <>
       <Header />
       <Navbar />
-      <StyledComponentWithBackgroundImage />
+      <StyledComponentWithBackgroundImage imageurl={imageBack} />
       <Container>
         <StyledSongPage>
           <div className="container">
             <div className="songInfo flex gap-10 text-white">
               <img
                 className="w-72 h-72"
-                src="../../public/IMG_6270.JPG"
+                src={songData?.custom_song_art_image_url}
                 alt=""
               />
               <div className="artistInfo ">
-                <h2 className="title text-xxl">Song name</h2>
-                <h3 className="artistName text-xl">Alex</h3>
+                <h2 className="title text-xxl">{songData?.title}</h2>
+                <h3 className="artistName text-xl">{songData?.artist_names}</h3>
                 <p className="text-m">produced by</p>
-                <span className="text-xl">Name & </span>
-                <span className="text-xl">Name</span>
+                <p>
+                  {songData?.producer_artists.length > 0 ? (
+                    songData.producer_artists.length === 1 ? (
+                      <span className="text-xl">
+                        {songData.producer_artists[0].name}
+                      </span>
+                    ) : (
+                      <span className="text-xl">{`${songData.producer_artists[0].name} & ${songData.producer_artists[1].name}`}</span>
+                    )
+                  ) : (
+                    <span>"No producer information"</span>
+                  )}
+                </p>
                 <p className="songDiscription text-m mt-6">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet
-                  repudiandae molestiae eaque! Animi dolorum est, sed nesciunt
-                  consequatur commodi quisquam quam sint, fugiat ipsum quia
-                  aperiam? Soluta excepturi perferendis eius?{" "}
-                  <span className="underline">Read More</span>
+                  {songData?.description_preview.length > 35 &&
+                    songData?.description_preview.substring(0, 135) + " ..."}
+                  <a href="#songDescriptionAbout">
+                    <span className="flex underline text-white">
+                      Read more
+                      <PiArrowElbowRightDown className="text-white m-2" />
+                    </span>
+                  </a>
                 </p>
                 <div className="intDataSong flex gap-2 text-xs mt-4">
                   <CiCalendar className="text-s" />
-                  <p>Nov 15, 2005 </p>
+                  <p>
+                    {songData?.release_date_with_abbreviated_month_for_display}
+                  </p>
                   <FaEye className="text-s mt-0.5" />
-                  <p>12,5 M views</p>
+                  <p>
+                    {songData?.stats.pageviews > 1000000
+                      ? (songData?.stats.pageviews / 1000000)
+                          .toFixed(1)
+                          .replace(/\.0+$/, "") + "M"
+                      : (songData?.stats.pageviews / 100000)
+                          .toFixed(1)
+                          .replace(/\.0+$/, "") + "k"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -61,55 +110,49 @@ export const SongPage = () => {
               <div className="songLyricsHeader flex gap-5">
                 <div className="songLyricsTitle flex gap-2">
                   <IoMdInformationCircleOutline className="mt-0.5" />
-                  <p>Title lyrics</p>
+                  <p>{songData?.title} lyrics</p>
                 </div>
                 <div className="translationLyrics flex gap-2">
                   <MdOutlineTranslate className="mt-0.5" />
                   <p>Translation</p>
                 </div>
               </div>
-              <div className="songLyricsAndDescription mt-4 flex gap-40">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Dolorum consequatur non voluptas debitis a, quisquam,
-                  voluptates deleniti ipsum ad molestias similique. Voluptatum
-                  nesciunt expedita quam voluptatibus animi perferendis ipsa
-                  aliquam eos quis voluptatem ullam temporibus autem facere
-                  doloremque dolorem illum, excepturi veniam inventore
-                  necessitatibus voluptas culpa consectetur. Possimus unde
-                  labore ipsum quibusdam soluta asperiores error quis sit magni?
-                  Impedit et ut unde dolores. Nisi sunt cupiditate minima
-                  delectus perferendis sed voluptates, recusandae molestiae
-                  aliquid quisquam nulla reprehenderit temporibus vitae nesciunt
-                  quos fugiat labore illo, laboriosam laudantium ipsam eius.
-                  Modi sunt pariatur nulla iusto, est laudantium numquam? Soluta
-                  atque itaque alias!
-                </p>
+              <div className="songLyricsAndDescription mt-4 flex justify-between gap-40">
+                {lyricsLoading && <p>Loading</p>}
+                {lyricsError && <p>Error</p>}
+                <SongLyrics lyricsHTML={lyricsData?.lyrics.body.html} />
                 <div
-                  className={`songLyricsDescription px-8 py-2 border-l border-gray ${
-                    isOpen ? "border" : ""
-                  }`}
+                  className={`songLyricsDescription h-fit px-8 py-2 border-l border-gray`}
                 >
                   <div className="flex gap-3 text-l text-green-500 mb-4">
                     <FaRegCheckCircle className="mt-1" />
-                    <p>
-                      Complete the song
-                      <span
-                        onClick={handleOpen}
-                        className="openClose ml-8 text-s text-black cursor-pointer"
-                      >
-                        {isOpen ? "Open" : "Close"}
-                      </span>
+                    <p>Complete the song</p>
+                    <p
+                      onClick={handleOpen}
+                      className="openClose text-s text-black cursor-pointer ml-auto mt-1"
+                    >
+                      {isOpen ? "Open" : "Close"}
                     </p>
                   </div>
-                  <div
-                    className={`flex gap-3 text-l text-green-500 pb-4 ${
-                      isOpen ? "close" : ""
-                    }`}
-                  >
-                    <FaRegCheckCircle className="mt-1" />
-                    <p>Lyrics</p>
-                  </div>
+                  {songData?.lyrics_state === "complete" ? (
+                    <div
+                      className={`flex gap-3 text-l text-green-500 pb-4 ${
+                        isOpen ? "close" : ""
+                      }`}
+                    >
+                      <FaRegCheckCircle className="mt-1" />
+                      <p>Lyrics</p>
+                    </div>
+                  ) : (
+                    <div
+                      className={`flex gap-3 text-l text-red-500 pb-4 ${
+                        isOpen ? "close" : ""
+                      }`}
+                    >
+                      <IoMdInformationCircleOutline className="mt-1" />
+                      <p>Lyrics</p>
+                    </div>
+                  )}
                   <div
                     className={`border-t border-gray py-4 ${
                       isOpen ? "close" : ""
@@ -125,16 +168,26 @@ export const SongPage = () => {
                         <p>Released on</p>
                       </div>
                       <div>
-                        <p>Feb 9, 2001</p>
+                        <p>{songData?.release_date_for_display}</p>
                       </div>
                     </div>
-                    <div className="songLyricsReleas flex justify-between">
+                    <div className="songLyricsReleas flex justify-between gap-10">
                       <div className="flex gap-2">
                         <VscSettings />
                         <p>Produced by</p>
                       </div>
                       <div>
-                        <p>Eminem</p>
+                        <p>
+                          {songData?.producer_artists.length > 0 ? (
+                            songData.producer_artists.length === 1 ? (
+                              <span>{songData.producer_artists[0].name}</span>
+                            ) : (
+                              <span>{`${songData.producer_artists[0].name} & ${songData.producer_artists[1].name}`}</span>
+                            )
+                          ) : (
+                            <span>"No producer information"</span>
+                          )}
+                        </p>
                       </div>
                     </div>
                     <div className="songLyricsReleas flex justify-between">
@@ -143,7 +196,15 @@ export const SongPage = () => {
                         <p>Written by</p>
                       </div>
                       <div>
-                        <p>Alex</p>
+                        <p>
+                          {songData?.writer_artists.map(
+                            (
+                              artist: any // eslint-disable-line
+                            ) => (
+                              <span key={artist.id}>{artist.name}</span>
+                            )
+                          )}
+                        </p>
                       </div>
                     </div>
                     <div className="songLyricsReleas flex justify-between">
@@ -152,11 +213,22 @@ export const SongPage = () => {
                         <p>On Album</p>
                       </div>
                       <div>
-                        <p>Bluebird</p>
+                        <p>
+                          {songData?.albums.map(
+                            (
+                              name: any, // eslint-disable-line
+                              i: number
+                            ) => i === 0 && name.name
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div id="songDescriptionAbout" className="py-10">
+                <h2 className="text-xxxl">About</h2>
+                <p className="text-l">{songData?.description_preview}</p>
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ const routerConfig = createBrowserRouter([
     element: <MainPage />,
   },
   {
-    path: "/song-details",
+    path: "/song-details/:songId",
     element: <SongPage />,
   },
   {

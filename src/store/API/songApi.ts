@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl, xHost, xKey } from "../../utils/baseUrl";
-import { SongResponse } from "../../modals/artistSongs";
 import { LyricsResponse } from "../../modals/lyrics";
+import { IGetSongResponse } from "../../modals/song";
 
 export const songApi = createApi({
   reducerPath: 'songApi',
@@ -13,7 +13,7 @@ export const songApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    getSongById: build.query<SongResponse, any>({ //eslint-disable-line
+    getSongById: build.query<IGetSongResponse, any>({ //eslint-disable-line
       query: (songId: string) => ({
         url: `/song/details/?id=${songId}`
       })
@@ -26,4 +26,4 @@ export const songApi = createApi({
   })
 })
 
-export const { useGetSongByIdQuery, useGetLyricsQuery } = songApi
+export const { useLazyGetSongByIdQuery, useGetLyricsQuery } = songApi

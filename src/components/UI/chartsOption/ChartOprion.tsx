@@ -1,5 +1,3 @@
-
-
 interface Option {
   label: string;
   value: string;
@@ -17,10 +15,10 @@ export const ChartGenre = ({
   onSelect,
 }: GenreSelectorProps) => {
   return (
-    <div className="typeOption">
+    <div className="typeOption" key={title}>
       <p>{title}</p>
       {options.map((option) => (
-        <p onClick={() => onSelect(option.value)}>
+        <p onClick={() => onSelect(option.value)} key={option.value}>
           {option.label}
         </p>
       ))}

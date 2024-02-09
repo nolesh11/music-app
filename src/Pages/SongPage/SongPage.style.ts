@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
-// interface IImageUrl {
-//   imageUrl: string;
-// }
+interface IImageUrl {
+  imageurl: string;
+}
 
-export const StyledComponentWithBackgroundImage = styled.div`
+export const StyledComponentWithBackgroundImage = styled.div<IImageUrl>`
   width: 100%;
   height: 360px;
-
-  background-image: url(../../public/wallp.jpeg);
+  background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 0 top calc(-18.8vw + 1px);
@@ -109,9 +108,5 @@ export const StyledSongPage = styled.div`
 
   .close {
     display: none;
-  }
-
-  .border {
-    border: none;
   }
 `;

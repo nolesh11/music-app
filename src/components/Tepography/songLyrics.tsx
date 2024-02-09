@@ -1,9 +1,9 @@
-type SongLyricsProps = {
-  lyricsHTML: string
+type SongLyricsProps<T> = {
+  lyricsHTML: T;
 }
 
-export const SongLyrics = ({ lyricsHTML }: SongLyricsProps) => {
+export const SongLyrics = <T,>({ lyricsHTML }: SongLyricsProps<T>) => {
   return (
-    <div dangerouslySetInnerHTML={{ __html: lyricsHTML }} />
+    <div className="text-xl" dangerouslySetInnerHTML={{ __html: String (lyricsHTML) }} />
   )
 }
