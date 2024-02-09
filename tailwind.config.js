@@ -8,14 +8,11 @@ export default {
     },
     fontSize: {
       xs: '12px',
-      sm: '0.8rem',
+      s: '14px',
       m: '16px',
-      base: '1rem',
-      xl: '1.25rem',
-      xxl: '1.563rem',
-      xxxl: '1.953rem',
-      xxxxl: '2.441rem',
-      xxxxxl: '3.052rem',
+      l: '18px',
+      xl: '24px',
+      xxl: '36px'
     },
     boxShadow: {
       default: '0, 0, 10px rgba(0, 0, 0, .1)'
