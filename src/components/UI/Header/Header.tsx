@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { StyledHeader } from "./Header.style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
-
+  const navigate = useNavigate()
+  const handleLogOut = () => {
+    navigate('/')
+  }
 
   return (
     <StyledHeader>
@@ -39,7 +42,8 @@ export const Header = () => {
           </svg>
         </div>
         <div className="userLogin mt-3 ">
-          <Link to={'/login'}>
+          <button onClick={handleLogOut} className="mr-3">Log out</button>
+          <Link to={'/'}>
             <button className="mr-3">Sign in</button>
           </Link>
           <button>Sign up</button>
