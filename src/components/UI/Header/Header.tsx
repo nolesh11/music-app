@@ -6,7 +6,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const handleLogOut = () => {
-    navigate('/')
+    navigate('/login')
   }
 
   return (
@@ -43,7 +43,7 @@ export const Header = () => {
         </div>
         <div className="userLogin mt-3 ">
           <button onClick={handleLogOut} className="mr-3">Log out</button>
-          <Link to={'/'}>
+          <Link to={'/login'}>
             <button className="mr-3">Sign in</button>
           </Link>
           <button>Sign up</button>

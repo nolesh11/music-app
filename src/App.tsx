@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MainPage } from "./Pages/MainPage/MainPage";
 import { AlbumPage } from "./Pages/AlbumPage/AlbumPage";
 import { LoginPage } from "./Pages/LoginPage/LoginPage";
-import { SongPage } from "./Pages/SongPage/SongaPage";
+import { SongPage } from "./Pages/SongPage/SongPage";
 
 const routerConfig = createBrowserRouter([
   {

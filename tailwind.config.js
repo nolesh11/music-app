@@ -12,13 +12,15 @@ export default {
       m: '16px',
       l: '18px',
       xl: '24px',
-      xxl: '36px'
+      xxl: '36px',
+      xxxl: '40px',
     },
     boxShadow: {
       default: '0, 0, 10px rgba(0, 0, 0, .1)'
     },
     borderColor: {
-      default: 'rgba(0, 0, 0, .2)'
+      default: 'rgba(0, 0, 0, .2)',
+      gray: 'rgb(55 65 81)',
     }
   },
   plugins: [],
