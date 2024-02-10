@@ -1,3 +1,13 @@
+export interface IGetSongResponse {
+  meta: Meta
+  response: Response
+  song?: any //eslint-disable-line
+}
+
+export interface Meta {
+  status: number
+}
+
 export interface SongResponse {
   song: Song
 }
