@@ -1,53 +1,53 @@
-// import { useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-// import { Heading } from "../../components/Tepography/Heading";
+import { Heading } from "../../components/Tepography/Heading";
 import { Header } from "../../components/UI/Header/Header";
 import { Navbar } from "../../components/UI/Navbar/Navbar";
 import { Container } from "../../components/UI/container/Container.style";
-// import {
-//   useGetAlbumByIdQuery,
-//   useGetAppearanceByIdQuery,
-// } from "../../store/API/albumApi";
-// import {
-//   StyledAlbumPage,
-//   StyledComponentWithBackgroundImage,
-// } from "./AlbumPage.style";
+import {
+  useGetAlbumByIdQuery,
+  useGetAppearanceByIdQuery,
+} from "../../store/API/albumApi";
+import {
+  StyledAlbumPage,
+  StyledComponentWithBackgroundImage,
+} from "./AlbumPage.style";
 
 export const AlbumPage = () => {
-  // const [isFull, setIsFull] = useState(false);
+  const [isFull, setIsFull] = useState(false);
 
-  // const { albumId } = useParams();
+  const { albumId } = useParams();
 
-  // const {
-  //   data: album,
-  //   isLoading: albumLoading,
-  //   isError: albumError,
-  // } = useGetAlbumByIdQuery(albumId);
-  // const {
-  //   data: appearance,
-  //   isLoading: appearanceLoading,
-  //   isError: appearanceError,
-  // } = useGetAppearanceByIdQuery(albumId);
+  const {
+    data: album,
+    isLoading: albumLoading,
+    isError: albumError,
+  } = useGetAlbumByIdQuery(albumId);
+  const {
+    data: appearance,
+    isLoading: appearanceLoading,
+    isError: appearanceError,
+  } = useGetAppearanceByIdQuery(albumId);
 
-  // const albumData = album?.album;
-  // const appearanceData = appearance?.album_appearances;
-  // const maxLength = 435;
+  const albumData = album?.album;
+  const appearanceData = appearance?.album_appearances;
+  const maxLength = 435;
 
-  // const imageUrl = `${albumData?.header_image_url}`;
+  const imageUrl = `${albumData?.header_image_url}`;
 
-  // const handleText = () => {
-  //   setIsFull(!isFull);
-  // };
+  const handleText = () => {
+    setIsFull(!isFull);
+  };
 
   return (
     <>
       <Header />
       <Navbar />
-      {/* <StyledComponentWithBackgroundImage imageUrl={imageUrl} /> */}
+      <StyledComponentWithBackgroundImage imageUrl={imageUrl} />
       <Container>
-        {/* <StyledAlbumPage> */}
-          {/* <div className={`container`}>
+        <StyledAlbumPage>
+          <div className={`container`}>
             <div className="albumInfo flex gap-10 flex-wrap justify-center">
               {albumLoading && <p>Loading</p>}
               {albumError && <p>Error</p>}
@@ -163,8 +163,8 @@ export const AlbumPage = () => {
                       </div>
                     )}
                   </div>
-                </div> */}
-                {/* <div className="albumScholars">
+                </div>
+                <div className="albumScholars">
                   <h5 className="my-2">top album scholars</h5>
                   <div className="bg-white p-4">
                     <div className="artistLeaderboardList flex p-2 border-b-2">
@@ -220,11 +220,11 @@ export const AlbumPage = () => {
                       <p className="attributionValue ml-auto">123.123</p>
                     </div>
                   </div>
-                </div> */}
-              {/* </div>
+                </div>
+              </div>
             </div>
-          </div> */}
-        {/* </StyledAlbumPage> */}
+          </div>
+        </StyledAlbumPage>
       </Container>
     </>
   );
