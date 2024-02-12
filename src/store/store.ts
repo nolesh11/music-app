@@ -5,6 +5,7 @@ import { chartApi } from "./API/chartsApi";
 import { albumApi } from "./API/albumApi";
 import { artistApi } from "./API/artistApi";
 import { songApi } from "./API/songApi";
+import { searchApi } from "./API/searchApi";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [albumApi.reducerPath]: albumApi.reducer,
     [artistApi.reducerPath]: artistApi.reducer,
     [songApi.reducerPath]: songApi.reducer,
+    [searchApi.reducerPath]: searchApi.reducer,
   },
   middleware: (getDefaultMiddleWare) => 
     getDefaultMiddleWare().concat([
@@ -20,6 +22,7 @@ export const store = configureStore({
       albumApi.middleware,
       artistApi.middleware,
       songApi.middleware,
+      searchApi.middleware,
     ])
 })
 

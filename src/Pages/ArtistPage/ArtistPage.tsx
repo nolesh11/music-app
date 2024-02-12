@@ -147,7 +147,7 @@ export const ArtistPage = () => {
                 </p>
                 <div className="artistSongsList grid grid-cols-2 grid-rows-3 gap-2 p-1 mb-2">
                   {artistSongsData && artistSongsData.map((elem: any) => ( // eslint-disable-line
-                    <div className="song w-64 bg-white flex gap-2">
+                    <div key={elem.id} className="song w-64 bg-white flex gap-2">
                       <img
                         className="w-20 h-20"
                         src={elem.song_art_image_url}
@@ -177,7 +177,7 @@ export const ArtistPage = () => {
                 </p>
                 <div className="arttistAlbums bg-white ml-2 p-6 grid grid-cols-3 grid-rows-2 gap-2">
                   {artistAlbumsData && artistAlbumsData.map((elem: any) => ( //eslint-disable-line
-                    <div className="artistAlbumsInfo text-center text-xs">
+                    <div key={elem.id} className="artistAlbumsInfo text-center text-xs">
                       <img
                         className="w-40 h-40"
                         src={elem.cover_art_url}
