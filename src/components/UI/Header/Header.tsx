@@ -58,19 +58,75 @@ export const Header = () => {
             className="px-2"
           />
           {dropDown && (
-            <div className={`searchResult absolute top-12 bg-gray-200 w-96 h-header overflow-y-scroll z-10`}>
+            <div
+              className={`searchResult absolute top-12 bg-gray-200 w-96 h-header overflow-y-scroll z-10`}
+            >
               <h3 className="p-3 text-gray-500 uppercase">Search result</h3>
-              <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">Top result</p>
+              <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">
+                Top result
+              </p>
               {searchResult.map((elem: any) => {// eslint-disable-line
+                
                 if (elem.type == "top_hit") {
                   return elem.hits.map(
                     (
                       hit: any // eslint-disable-line
                     ) =>
                       hit.index === "song" && (
-                        <Link key={hit.id} to={`/song-details/${hit.result.id}`}>
-
-                            <div key={hit.result.id} className="songInfo flex gap-4 mb-5">
+                        <Link
+                          key={hit.id}
+                          to={`/song-details/${hit.result.id}`}
+                        >
+                          <div
+                            key={hit.result.id}
+                            className="songInfo flex gap-4 mb-5"
+                          >
+                            <img
+                              className="w-20"
+                              src={hit.result.song_art_image_thumbnail_url}
+                              alt=""
+                            />
+                            <div className="songDetails">
+                              <p className="songTitle">{hit.result.title}</p>
+                              <p className="songArtist ">
+                                {hit.result.artist_names}
+                              </p>
+                              <p>
+                                {hit.result.stats.pageviews > 1000000
+                                  ? (hit.result.stats.pageviews / 1000000)
+                                      .toFixed(1)
+                                      .replace(/\.0+$/, "") + "M"
+                                  : (hit.result.stats.pageviews / 100000)
+                                      .toFixed(1)
+                                      .replace(/\.0+$/, "") + "k"}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      )
+                  );
+                }
+              })}
+              <div>
+                <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">
+                  Top songs
+                </p>
+                {searchResult.map((elem: any) => {// eslint-disable-line
+                  
+                  if (elem.type == "song") {
+                    return elem.hits.map(
+                      (
+                        hit: any // eslint-disable-line
+                      ) =>
+                        hit.index === "song" && (
+                          <Link
+                            key={hit.id}
+                            to={`/song-details/${hit.result.id}`}
+                          >
+                            <div
+                              key={hit.result.id}
+                              className="songInfo flex gap-4 mb-5"
+                            >
                               <img
                                 className="w-20"
                                 src={hit.result.song_art_image_thumbnail_url}
@@ -78,7 +134,7 @@ export const Header = () => {
                               />
                               <div className="songDetails">
                                 <p className="songTitle">{hit.result.title}</p>
-                                <p className="songArtist ">
+                                <p className="songArtist">
                                   {hit.result.artist_names}
                                 </p>
                                 <p>
@@ -92,48 +148,6 @@ export const Header = () => {
                                 </p>
                               </div>
                             </div>
-
-                        </Link>
-                      )
-                  );
-                }
-              })}
-              <div>
-                <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">Top songs</p>
-                {searchResult.map((elem: any) => {// eslint-disable-line
-                  if (elem.type == "song") {
-                    return elem.hits.map(
-                      (
-                        hit: any // eslint-disable-line
-                      ) =>
-                        hit.index === "song" && (
-                          <Link key={hit.id} to={`/song-details/${hit.result.id}`}>
-
-                              <div key={hit.result.id} className="songInfo flex gap-4 mb-5">
-                                <img
-                                  className="w-20"
-                                  src={hit.result.song_art_image_thumbnail_url}
-                                  alt=""
-                                />
-                                <div className="songDetails">
-                                  <p className="songTitle">
-                                    {hit.result.title}
-                                  </p>
-                                  <p className="songArtist">
-                                    {hit.result.artist_names}
-                                  </p>
-                                  <p>
-                                    {hit.result.stats.pageviews > 1000000
-                                      ? (hit.result.stats.pageviews / 1000000)
-                                          .toFixed(1)
-                                          .replace(/\.0+$/, "") + "M"
-                                      : (hit.result.stats.pageviews / 100000)
-                                          .toFixed(1)
-                                          .replace(/\.0+$/, "") + "k"}
-                                  </p>
-                                </div>
-                              </div>
-
                           </Link>
                         )
                     );
@@ -141,23 +155,34 @@ export const Header = () => {
                 })}
               </div>
               <div>
-                <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">Top artists</p>
+                <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">
+                  Top artists
+                </p>
                 {searchResult.map((elem: any) => {// eslint-disable-line
+                  
                   if (elem.type == "artist") {
                     return elem.hits.map(
                       (
                         hit: any // eslint-disable-line
                       ) =>
                         hit.index === "artist" && (
-                          <Link key={hit.id} to={`/artist-details/${hit.result.id}`}>
-                          
-                              <div key={hit.result.id} className="songInfo flex gap-4 mb-5">
-                                <img className="w-20" src={hit.result.image_url} alt="" />
-                                <div className="songDetails">
-                                  <p className="songTitle">{hit.result.name}</p>
-                                </div>
+                          <Link
+                            key={hit.id}
+                            to={`/artist-details/${hit.result.id}`}
+                          >
+                            <div
+                              key={hit.result.id}
+                              className="songInfo flex gap-4 mb-5"
+                            >
+                              <img
+                                className="w-20"
+                                src={hit.result.image_url}
+                                alt=""
+                              />
+                              <div className="songDetails">
+                                <p className="songTitle">{hit.result.name}</p>
                               </div>
-
+                            </div>
                           </Link>
                         )
                     );
@@ -165,23 +190,34 @@ export const Header = () => {
                 })}
               </div>
               <div>
-                <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">Top albums</p>
+                <p className="topResultText text-gray-500 pt-5 pb-2 pl-4 uppercase">
+                  Top albums
+                </p>
                 {searchResult.map((elem: any) => {// eslint-disable-line
+                  
                   if (elem.type == "album") {
                     return elem.hits.map(
                       (
                         hit: any // eslint-disable-line
                       ) =>
                         hit.index === "album" && (
-                          <Link key={hit.id} to={`/album-details/${hit.result.id}`}>
-                          
-                              <div key={hit.result.id} className="songInfo flex gap-4 mb-5">
-                                <img className="w-20" src={hit.result.cover_art_url} alt="" />
-                                <div className="songDetails">
-                                  <p className="songTitle">{hit.result.name}</p>
-                                </div>
+                          <Link
+                            key={hit.id}
+                            to={`/album-details/${hit.result.id}`}
+                          >
+                            <div
+                              key={hit.result.id}
+                              className="songInfo flex gap-4 mb-5"
+                            >
+                              <img
+                                className="w-20"
+                                src={hit.result.cover_art_url}
+                                alt=""
+                              />
+                              <div className="songDetails">
+                                <p className="songTitle">{hit.result.name}</p>
                               </div>
-
+                            </div>
                           </Link>
                         )
                     );
