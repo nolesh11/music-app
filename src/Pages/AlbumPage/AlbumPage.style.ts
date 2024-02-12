@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 interface IImageUrl {
-  imageUrl: string;
+  imageurl: string;
 }
 
 export const StyledComponentWithBackgroundImage = styled.div<IImageUrl>`
   width: 100%;
   height: 360px;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left 0 top calc(-18.8vw + 1px);
