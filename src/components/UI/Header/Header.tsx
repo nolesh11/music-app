@@ -26,7 +26,7 @@ export const Header = () => {
     navigate("/login");
   };
   const handleToMain = () => {
-    navigate("/main");
+    navigate("/");
   };
 
   return (
