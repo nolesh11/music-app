@@ -1,35 +1,35 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { useEffect } from "react";
 
 import { StyledLoginPage } from "./LoginPage.style";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
-import { changeUser } from "../../store/slices/userSlices";
+// import { changeUser } from "../../store/slices/userSlices";
 import { Input } from "../../components/UI/input/Input";
+// import { useLoginUserMutation } from "../../store/API/authApi";
+import { fetchUserData, selectIsAuth } from "../../store/slices/userSlices";
 
 interface ILoginPageForm {
-  useremail: string;
+  email: string;
   password: string;
 }
 
-const mockuser = {
-  mail: "example@mail.com",
-  phone_number: "1243546",
-  user_id: 1,
-  name: "Alex",
-};
-
 const loginFormSchema = yup.object({
-  useremail: yup.string().email().required("Required field"),
+  email: yup.string().email().required("Required field"),
   password: yup.string().min(4, "Minimum 4 digits").required("Required field"),
 });
 
 export const LoginPage = () => {
-  
+  const isAuth = useSelector(selectIsAuth)
+  const dispatch: ThunkDispatch<any, any, Action> = useDispatch(); //eslint-disable-line
+  const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -37,18 +37,34 @@ export const LoginPage = () => {
   } = useForm<ILoginPageForm>({
     resolver: yupResolver(loginFormSchema),
     defaultValues: {
-      useremail: "",
+      email: "",
       password: "",
     },
+    mode: "onChange"
   });
   
-  const dispatch = useDispatch();
+
+
+  // const [loginUser, { data: userData }] = useLoginUserMutation()
   
-  const onLoginSubmit: SubmitHandler<ILoginPageForm> = () => { 
-    dispatch(changeUser(mockuser));
-    
+  const onLoginSubmit: SubmitHandler<ILoginPageForm> = async (values) => { 
+    const data = await dispatch(fetchUserData(values))
+    if (!data.payload) {
+      alert("Can not login")
+    }
+
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token)
+    }
   };
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/')
+    }
+  }, [navigate, isAuth])
+
+  console.log('isAuth', isAuth);
 
   return (
     <StyledLoginPage>
@@ -62,14 +78,14 @@ export const LoginPage = () => {
           </h1>
           <div className="input-box">
             <Controller
-              name="useremail"
+              name="email"
               control={control}
               render={({ field }) => (
                 <Input
                   type="text"
                   placeholder="Username"
-                  isError={errors.useremail ? true : false}
-                  errorMessage={errors.useremail?.message}
+                  isError={errors.email ? true : false}
+                  errorMessage={errors.email?.message}
                   {...field}
                   className="w-full mb-6 pl-8 pr-12 py-4 bg-inherit rounded-full text-black border-2 border-default placeholder:text-black"
                 />

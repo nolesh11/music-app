@@ -1,4 +1,4 @@
-import { Charts } from "../../components/UI/Charts/Charts";
+// import { Charts } from "../../components/UI/Charts/Charts";
 import { Footer } from "../../components/UI/Footer/Footer";
 import { Header } from "../../components/UI/Header/Header";
 import { Navbar } from "../../components/UI/Navbar/Navbar";
@@ -10,7 +10,7 @@ export const MainPage = () => {
       <Header />
       <Navbar />
       <Container>
-        <Charts />
+        {/* <Charts /> */}
       </Container>
       <Footer />
     </>
