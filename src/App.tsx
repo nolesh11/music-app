@@ -38,7 +38,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchUserDataMe())
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="App">
