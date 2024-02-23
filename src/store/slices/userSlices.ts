@@ -9,13 +9,13 @@ interface ILoginPageForm {
 export const fetchUserData = createAsyncThunk(
   "fetchUserData",
   async (params: ILoginPageForm) => {
-    const { data } = await axios.post("/login", params);
+    const { data } = await axios.post("login", params);
     return data;
   }
 );
 
 export const fetchUserDataMe = createAsyncThunk("fetchUserDataMe", async () => {
-  const { data } = await axios.get("/getme");
+  const { data } = await axios.get("getme");
   return data;
 });
 

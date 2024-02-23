@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledLoginPage = styled.div`
   height: 100vh;
   width: 100vw;
-  background-image: url(./public/Dreamscape.jpeg);
+  background-image: url(./Dreamscape.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
