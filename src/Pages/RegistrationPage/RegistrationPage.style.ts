@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledLoginPage = styled.div`
+export const StyledRegistartonPage = styled.div`
   height: 100vh;
   width: 100vw;
   background-image: url(./Dreamscape.jpeg);
@@ -44,9 +44,5 @@ export const StyledLoginPage = styled.div`
         text-decoration: underline;
       }
     }
-  }
-
-  @media screen and (max-width: 530px) {
-    
   }
 `;

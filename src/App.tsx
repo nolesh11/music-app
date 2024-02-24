@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
 import { MainPage } from "./Pages/MainPage/MainPage";
 import { AlbumPage } from "./Pages/AlbumPage/AlbumPage";
 import { LoginPage } from "./Pages/LoginPage/LoginPage";
@@ -8,11 +9,16 @@ import { useDispatch } from "react-redux";
 import { fetchUserDataMe } from "./store/slices/userSlices";
 import { useEffect } from "react";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";
+import { RegistrationPage } from "./Pages/RegistrationPage/RegistrationPage";
 
 const routerConfig = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/registration",
+    element: <RegistrationPage />,
   },
   {
     path: "/",

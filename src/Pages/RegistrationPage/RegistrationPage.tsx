@@ -1,60 +1,61 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { StyledLoginPage } from "./LoginPage.style";
-import { FaLock } from "react-icons/fa";
+import { StyledRegistartonPage } from "./RegistrationPage.style";
 import { Input } from "../../components/UI/input/Input";
-import { fetchUserData, selectIsAuth } from "../../store/slices/userSlices";
+import { FaLock, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserRegister, selectIsAuth } from "../../store/slices/userSlices";
+import { Action } from "redux";
+import { ThunkDispatch } from 'redux-thunk';
+import { useEffect } from "react";
 
-interface ILoginPageForm {
+
+interface IRegisterPageForm {
+  username: string;
   email: string;
   password: string;
 }
 
-const loginFormSchema = yup.object({
+const registerFormSchema = yup.object({
+  username: yup.string().required(),
   email: yup.string().email().required("Required field"),
   password: yup.string().min(4, "Minimum 4 digits").required("Required field"),
 });
 
-export const LoginPage = () => {
+export const RegistrationPage = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch: ThunkDispatch<any, any, Action> = useDispatch(); //eslint-disable-line
   const navigate = useNavigate();
+
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginPageForm>({
-    resolver: yupResolver(loginFormSchema),
+  } = useForm<IRegisterPageForm>({
+    resolver: yupResolver(registerFormSchema),
     defaultValues: {
+      username: "",
       email: "",
       password: "",
     },
-    mode: "onChange"
+    mode: 'onChange'
   });
   
-
-
-  // const [loginUser, { data: userData }] = useLoginUserMutation()
-  
-  const onLoginSubmit: SubmitHandler<ILoginPageForm> = async (values) => { 
-    const data = await dispatch(fetchUserData(values))
+  const onRegisterSubmit: SubmitHandler<IRegisterPageForm> = async (values) => {
+    const data = await dispatch(fetchUserRegister(values))
     if (!data.payload) {
-      alert("Can not login")
+      alert("Can not sign up")
     }
 
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token)
     }
-  };
+  }
 
   useEffect(() => {
     if (isAuth) {
@@ -65,22 +66,39 @@ export const LoginPage = () => {
   console.log('isAuth', isAuth);
 
   return (
-    <StyledLoginPage>
+    <StyledRegistartonPage>
       <div className="container">
         <form
-          onSubmit={handleSubmit(onLoginSubmit)}
+          onSubmit={handleSubmit(onRegisterSubmit)}
           className="w-96 bg-transparent border-2 border-default backdrop-blur-xl p-10 rounded-xl"
         >
           <h1 className="text-xxxxl text-black font-semibold text-center mb-6">
-            Login
+            Registration
           </h1>
+          <div className="input-box">
+            <Controller
+              name="username"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  placeholder="Full name"
+                  isError={errors.username ? true : false}
+                  errorMessage={errors.username?.message}
+                  {...field}
+                  className="w-full mb-6 pl-8 pr-12 py-4 bg-inherit rounded-full text-black border-2 border-default placeholder:text-black"
+                />
+              )}
+            />
+            <FaUser className="icon" />
+          </div>
           <div className="input-box">
             <Controller
               name="email"
               control={control}
               render={({ field }) => (
                 <Input
-                  type="text"
+                  type="email"
                   placeholder="Email"
                   isError={errors.email ? true : false}
                   errorMessage={errors.email?.message}
@@ -108,29 +126,20 @@ export const LoginPage = () => {
             />
             <FaLock className="icon" />
           </div>
-          <div className="remember-forget flex justify-between mb-4">
-            <label className="text-black text-sm">
-              <input type="checkbox" className="mr-1" />
-              Remember me
-            </label>
-            <Link to={"/"} className="text-sm">
-              Forgot password
-            </Link>
-          </div>
           <button
             type="submit"
             className="w-full h-11 py-2 bg-white rounded-full shadow-default text-m"
           >
-            Sign in
+            Sign up
           </button>
           <div>
             <p className="register text-white text-center mt-5 ">
-              Don't have an account?
-              <Link to={"/registration"}>Sign up</Link>
+              Already have an account?
+              <Link to={"/login"}>Sign in</Link>
             </p>
           </div>
         </form>
       </div>
-    </StyledLoginPage>
+    </StyledRegistartonPage>
   );
 };

@@ -55,8 +55,18 @@ export const Header = () => {
             <p>CHARTS</p>
             <p>VIDEOS</p>
             <p>PROMOTE YOUR MUSIC</p>
-            <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign in</p>
-            <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign up</p>
+            <p className={`userAuth ${isOpen ? "active" : ""}`}>
+              <Link to={"/login"} className={`mr-3`}>
+                Sign in
+              </Link>
+            </p>
+            <p className={`userAuth ${isOpen ? "active" : ""}`}>
+              <Link to={"/registration"} className={`mr-3 ${isOpen ? "active" : ""}`}>
+                Sign up
+              </Link>
+            </p>
+            {/* <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign in</p>
+            <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign up</p> */}
           </div>
           <Input
             placeholder="Search"
@@ -252,7 +262,7 @@ export const Header = () => {
             <Link to={"/login"} className="mr-3">
               Sign in
             </Link>
-            <Link to={"/login"} className="mr-3">
+            <Link to={"/registration"} className="mr-3">
               Sign up
             </Link>
           </div>

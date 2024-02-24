@@ -14,6 +14,14 @@ export const fetchUserData = createAsyncThunk(
   }
 );
 
+export const fetchUserRegister = createAsyncThunk(
+  "fetchUserRegister",
+  async (params: ILoginPageForm) => {
+    const { data } = await axios.post("registration", params);
+    return data;
+  }
+);
+
 export const fetchUserDataMe = createAsyncThunk("fetchUserDataMe", async () => {
   const { data } = await axios.get("getme");
   return data;
@@ -55,6 +63,18 @@ const userSlice = createSlice({
       state.data = action.payload;
     })
     .addCase(fetchUserDataMe.rejected, (state) => {
+      state.status = "loaded";
+      state.data = null;
+    })
+    .addCase(fetchUserRegister.pending, (state) => {
+      state.status = "loading";
+      state.data = null;
+    })
+    .addCase(fetchUserRegister.fulfilled, (state, action) => {
+      state.status = "loaded";
+      state.data = action.payload;
+    })
+    .addCase(fetchUserRegister.rejected, (state) => {
       state.status = "loaded";
       state.data = null;
     });
