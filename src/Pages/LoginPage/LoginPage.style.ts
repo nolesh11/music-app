@@ -47,6 +47,6 @@ export const StyledLoginPage = styled.div`
   }
 
   @media screen and (max-width: 530px) {
-    
+
   }
 `;
