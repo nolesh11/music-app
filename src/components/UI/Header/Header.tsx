@@ -84,6 +84,7 @@ export const Header = () => {
                 Top result
               </p>
               {searchResult.map((elem: any) => {// eslint-disable-line
+                
                 if (elem.type == "top_hit") {
                   return elem.hits.map(
                     (
@@ -175,6 +176,7 @@ export const Header = () => {
                   Top artists
                 </p>
                 {searchResult.map((elem: any) => {// eslint-disable-line
+                  
                   if (elem.type == "artist") {
                     return elem.hits.map(
                       (
@@ -209,6 +211,7 @@ export const Header = () => {
                   Top albums
                 </p>
                 {searchResult.map((elem: any) => {// eslint-disable-line
+                  
                   if (elem.type == "album") {
                     return elem.hits.map(
                       (
