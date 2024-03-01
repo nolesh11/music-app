@@ -1,20 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import userSlices from "./slices/userSlices";
+import userSlice from "./slices/userSlices";
 import { chartApi } from "./API/chartsApi";
 import { albumApi } from "./API/albumApi";
 import { artistApi } from "./API/artistApi";
 import { songApi } from "./API/songApi";
 import { searchApi } from "./API/searchApi";
+import { authApi } from "./API/authApi";
 
 export const store = configureStore({
   reducer: {
-    userSlices,
+    userSlice,
     [chartApi.reducerPath]: chartApi.reducer,
     [albumApi.reducerPath]: albumApi.reducer,
     [artistApi.reducerPath]: artistApi.reducer,
     [songApi.reducerPath]: songApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleWare) => 
     getDefaultMiddleWare().concat([
@@ -23,6 +25,7 @@ export const store = configureStore({
       artistApi.middleware,
       songApi.middleware,
       searchApi.middleware,
+      authApi.middleware,
     ])
 })
 

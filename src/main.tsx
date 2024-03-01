@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 
 import App from "./App.tsx";
@@ -12,7 +11,7 @@ import AuthProvider from "react-auth-kit";
 import { authStore } from "./store/authStore.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <AuthProvider store={authStore}>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -21,5 +20,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </ThemeProvider>
       </Provider>
     </AuthProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

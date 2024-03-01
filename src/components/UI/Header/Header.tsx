@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../input/Input";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { useSearchLyricsQuery } from "../../../store/API/searchApi";
+import { logout, selectIsAuth } from "../../../store/slices/userSlices";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,17 +18,23 @@ export const Header = () => {
   });
 
   const searchResult = searchData?.sections;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const isAuth = useSelector(selectIsAuth);
 
   useEffect(() => {
     setDropDown(debounced.length > 3 && searchResult?.length > 0);
   }, [debounced, searchResult]);
 
-  const navigate = useNavigate();
   const handleLogOut = () => {
-    navigate("/login");
+    if (window.confirm("Are you sure you want to log out")) {
+      dispatch(logout());
+      window.localStorage.removeItem('token')
+    }
   };
   const handleToMain = () => {
-    navigate("/main");
+    navigate("/");
   };
 
   return (
@@ -47,8 +55,18 @@ export const Header = () => {
             <p>CHARTS</p>
             <p>VIDEOS</p>
             <p>PROMOTE YOUR MUSIC</p>
-            <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign in</p>
-            <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign up</p>
+            <p className={`userAuth ${isOpen ? "active" : ""}`}>
+              <Link to={"/login"} className={`mr-3`}>
+                Sign in
+              </Link>
+            </p>
+            <p className={`userAuth ${isOpen ? "active" : ""}`}>
+              <Link to={"/registration"} className={`mr-3 ${isOpen ? "active" : ""}`}>
+                Sign up
+              </Link>
+            </p>
+            {/* <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign in</p>
+            <p className={`userAuth ${isOpen ? "active" : ""}`}>Sign up</p> */}
           </div>
           <Input
             placeholder="Search"
@@ -112,7 +130,6 @@ export const Header = () => {
                   Top songs
                 </p>
                 {searchResult.map((elem: any) => {// eslint-disable-line
-                  
                   if (elem.type == "song") {
                     return elem.hits.map(
                       (
@@ -239,15 +256,20 @@ export const Header = () => {
             </text>
           </svg>
         </div>
-        <div className="userLogin mt-3 ">
+        {isAuth ? (
           <button onClick={handleLogOut} className="mr-3">
             Log out
           </button>
-          <Link to={"/login"}>
-            <button className="mr-3">Sign in</button>
-          </Link>
-          <button>Sign up</button>
-        </div>
+        ) : (
+          <div className="userLogin mt-3 ">
+            <Link to={"/login"} className="mr-3">
+              Sign in
+            </Link>
+            <Link to={"/registration"} className="mr-3">
+              Sign up
+            </Link>
+          </div>
+        )}
       </div>
     </StyledHeader>
   );

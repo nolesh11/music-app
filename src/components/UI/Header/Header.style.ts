@@ -44,7 +44,8 @@ export const StyledHeader = styled.header`
     width: 100%;
     height: 100%;
     background-color: ${(props) => props.theme.colors.black};
-    color: ${(props) => props.theme.colors.white};
+    /* font-size: 12px;
+    color: ${(props) => props.theme.colors.white}; */
     flex-direction: column;
 
     .userAuth {
@@ -57,11 +58,18 @@ export const StyledHeader = styled.header`
     z-index: 999;
   }
 
-  .bergerMenuOpened p {
-    font-size: calc(2.2vw - 1px);
-    border-bottom: 1px solid ${(props) => props.theme.colors.white};
-    margin: 10px;
-    padding-bottom: 8px;
+  .bergerMenuOpened {
+    p {
+      font-size: 16px;
+      color: ${(props) => props.theme.colors.white};
+      border-bottom: 1px solid ${(props) => props.theme.colors.white};
+      margin: 10px;
+      padding-bottom: 8px;
+    }
+
+    a {
+      color: ${(props) => props.theme.colors.white};
+    }
   }
 
   @media screen and (max-width: 1100px) {
