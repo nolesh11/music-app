@@ -11,6 +11,7 @@ export const MainPage = () => {
       <Navbar />
       <Container>
         {/* <Charts /> */}
+        
       </Container>
       <Footer />
     </>
