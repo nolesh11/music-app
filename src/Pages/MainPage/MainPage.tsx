@@ -12,6 +12,7 @@ export const MainPage = () => {
       <Container>
         {/* <Charts /> */}
         
+
       </Container>
       <Footer />
     </>
